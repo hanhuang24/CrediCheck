@@ -168,10 +168,6 @@ def load_data():
     except Exception:
         return None
 
-
-@st.cache_resource
-import pickle
-
 @st.cache_resource
 def load_package():
     package_path = os.path.join(BASE_DIR, "deployment_package.pkl")
