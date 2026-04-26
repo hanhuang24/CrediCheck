@@ -26,175 +26,53 @@ st.set_page_config(
 # =========================================================
 # Custom CSS
 # =========================================================
-st.markdown("""
-<style>
-/* ===== Global ===== */
-html, body, [class*="css"], .stApp {
-    font-family: "Segoe UI", "Inter", sans-serif;
-    color: #1f2d3d !important;
+st.markdown("""    
+color: white;
 }
-
-.stApp {
-    background:
-        radial-gradient(circle at top left, rgba(84,149,255,0.10), transparent 28%),
-        radial-gradient(circle at top right, rgba(52,103,200,0.08), transparent 24%),
-        linear-gradient(180deg, #f7fbff 0%, #eef5ff 55%, #e8f1ff 100%);
+[data-testid="stDataFrame"] {    
+border: 1px solid #dbe8f5;    
+border-radius: 18px;    
+overflow: hidden;
 }
-
-/* ===== Main layout ===== */
-.block-container {
-    max-width: 1280px;
-    padding-top: 1rem;
-    padding-bottom: 2rem;
+.metric-card {    
+background: rgba(255,255,255,0.92);    
+border: 1px solid #dbe8f5;    
+border-radius: 18px;    
+padding: 20px 22px;    
+box-shadow: 0 8px 24px rgba(20,66,111,0.06);
 }
-
-/* ===== Headings & text ===== */
-h1, h2, h3, h4, h5, h6, p, span, label, div {
-    color: #1f2d3d !important;
+.feature-card {    
+background: rgba(255,255,255,0.94);    
+border: 1px solid #dbe8f5;    
+border-radius: 18px;    
+padding: 22px;    
+box-shadow: 0 8px 24px rgba(20,66,111,0.06);    
+min-height: 180px;
 }
-
-/* ===== Tabs ===== */
-.stTabs [data-baseweb="tab-list"] {
-    gap: 10px;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-    background: transparent !important;
+.hero-box {    
+background: rgba(255,255,255,0.78);    
+border: 1px solid #dce8f5;    
+border-radius: 22px;    
+padding: 24px 28px;    
+box-shadow: 0 10px 28px rgba(20,66,111,0.08);
 }
-
-.stTabs [data-baseweb="tab"] {
-    height: 50px;
-    background: rgba(255,255,255,0.96);
-    border-radius: 14px;
-    border: 1px solid #d6e4f3;
-    color: #18456f !important;
-    font-weight: 700;
-    padding: 0 18px;
-    box-shadow: 0 4px 12px rgba(20,66,111,0.05);
+.status-badge {    
+display: inline-block;    
+padding: 8px 14px;    
+border-radius: 999px;    
+background: rgba(34,197,94,0.12);    
+color: #15803d;    
+font-weight: 700;    
+font-size: 14px;    
+border: 1px solid rgba(34,197,94,0.25);
 }
-
-.stTabs [aria-selected="true"] {
-    background: linear-gradient(135deg, #1957b2 0%, #2d77dd 100%) !important;
-    color: #ffffff !important;
-    border: 1px solid #2d77dd !important;
+.small-muted {    
+color: #6B7280;    
+font-size: 15px;
 }
-
-/* 让选中 tab 内文字也变白 */
-.stTabs [aria-selected="true"] p,
-.stTabs [aria-selected="true"] span,
-.stTabs [aria-selected="true"] div {
-    color: #ffffff !important;
-}
-
-/* ===== Inputs ===== */
-div[data-baseweb="input"] > div,
-div[data-baseweb="select"] > div,
-div[data-baseweb="textarea"] > div,
-div[data-baseweb="base-input"] {
-    border-radius: 14px !important;
-    border: 1px solid #d4e3f3 !important;
-    background: #ffffff !important;
-    color: #1f2d3d !important;
-    box-shadow: none !important;
-}
-
-/* input text */
-input, textarea {
-    color: #1f2d3d !important;
-    background: #ffffff !important;
-}
-
-/* ===== Buttons ===== */
-.stButton > button {
-    background: linear-gradient(135deg, #1957b2 0%, #2d77dd 100%);
-    color: white !important;
-    border: none;
-    border-radius: 14px;
-    padding: 0.8rem 1rem;
-    font-size: 1rem;
-    font-weight: 800;
-    box-shadow: 0 10px 22px rgba(25,87,178,0.18);
-    transition: all 0.2s ease-in-out;
-}
-
-.stButton > button:hover {
-    background: linear-gradient(135deg, #174c99 0%, #2769c7 100%);
-    transform: translateY(-1px);
-}
-
-/* ===== Download button ===== */
-.stDownloadButton > button {
-    background: #ffffff !important;
-    color: #1957b2 !important;
-    border: 1px solid #cfe0f4 !important;
-    border-radius: 14px;
-    font-weight: 700;
-}
-
-.stDownloadButton > button:hover {
-    background: #edf5ff !important;
-    color: #123f84 !important;
-}
-
-/* ===== Metric cards / containers ===== */
-div[data-testid="metric-container"] {
-    background: rgba(255,255,255,0.95);
-    border: 1px solid #dbe8f6;
-    padding: 16px;
-    border-radius: 16px;
-    box-shadow: 0 6px 18px rgba(30,80,140,0.05);
-}
-
-/* ===== Dataframe / table ===== */
-div[data-testid="stDataFrame"] {
-    background: rgba(255,255,255,0.96);
-    border-radius: 16px;
-    border: 1px solid #dbe8f6;
-    padding: 6px;
-}
-
-/* ===== Sidebar ===== */
-section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #f4f9ff 0%, #eaf3ff 100%);
-    border-right: 1px solid #dbe8f6;
-}
-
-section[data-testid="stSidebar"] * {
-    color: #1f2d3d !important;
-}
-
-/* ===== Alerts ===== */
-.stAlert {
-    border-radius: 14px !important;
-    border: 1px solid #d8e6f5 !important;
-    background: rgba(255,255,255,0.95) !important;
-    color: #1f2d3d !important;
-}
-
-/* ===== Expander ===== */
-.streamlit-expanderHeader {
-    background: rgba(255,255,255,0.92);
-    border-radius: 12px;
-    color: #18456f !important;
-    font-weight: 700;
-}
-
-/* ===== Checkbox / radio text ===== */
-.stCheckbox label, .stRadio label {
-    color: #1f2d3d !important;
-}
-
-/* ===== Slider ===== */
-.stSlider * {
-    color: #1f2d3d !important;
-}
-
-/* ===== Markdown code blocks (if any) ===== */
-code {
-    color: #18456f !important;
-    background: #eef5ff !important;
-    padding: 2px 6px;
-    border-radius: 8px;
-}
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 # =========================================================
