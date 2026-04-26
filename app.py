@@ -26,13 +26,12 @@ st.set_page_config(
 # =========================================================
 # Custom CSS
 # =========================================================
-st.markdown(
-"""
+st.markdown("""
 <style>
-html, body, [class*="css"] {
+html, body, [class*="css"], .stApp {
     font-family: "Segoe UI", "Inter", sans-serif;
+    color: #1f1f1f !important;
 }
-
 .stApp {
     background:
         radial-gradient(circle at top left, rgba(84,149,255,0.10), transparent 28%),
@@ -46,15 +45,15 @@ html, body, [class*="css"] {
     padding-bottom: 2rem;
 }
 
-/* Tabs */
 .stTabs [data-baseweb="tab-list"] {
-    gap: 12px;
+    gap: 10px;
     margin-bottom: 1rem;
+    flex-wrap: wrap;
 }
 
 .stTabs [data-baseweb="tab"] {
     height: 50px;
-    background: rgba(255,255,255,0.92);
+    background: rgba(255,255,255,0.94);
     border-radius: 14px;
     border: 1px solid #dce8f5;
     color: #18456f;
@@ -69,9 +68,9 @@ html, body, [class*="css"] {
     border: 1px solid #2d77dd !important;
 }
 
-/* Inputs */
 div[data-baseweb="input"] > div,
-div[data-baseweb="select"] > div {
+div[data-baseweb="select"] > div,
+div[data-baseweb="textarea"] > div {
     border-radius: 14px !important;
     border: 1px solid #d4e3f3 !important;
     background: rgba(255,255,255,0.95) !important;
@@ -93,20 +92,59 @@ div[data-baseweb="select"] > div {
     color: white;
 }
 
-/* Dataframe */
 [data-testid="stDataFrame"] {
     border: 1px solid #dbe8f5;
     border-radius: 18px;
     overflow: hidden;
 }
 
+.metric-card {
+    background: rgba(255,255,255,0.92);
+    border: 1px solid #dbe8f5;
+    border-radius: 18px;
+    padding: 20px 22px;
+    box-shadow: 0 8px 24px rgba(20,66,111,0.06);
+}
+
+.feature-card {
+    background: rgba(255,255,255,0.94);
+    border: 1px solid #dbe8f5;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 8px 24px rgba(20,66,111,0.06);
+    min-height: 180px;
+}
+
+.hero-box {
+    background: rgba(255,255,255,0.78);
+    border: 1px solid #dce8f5;
+    border-radius: 22px;
+    padding: 24px 28px;
+    box-shadow: 0 10px 28px rgba(20,66,111,0.08);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(34,197,94,0.12);
+    color: #15803d;
+    font-weight: 700;
+    font-size: 14px;
+    border: 1px solid rgba(34,197,94,0.25);
+}
+
+.small-muted {
+    color: #6B7280;
+    font-size: 15px;
+}
+
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
 </style>
-"""
-, unsafe_allow_html=True
-)
+""", unsafe_allow_html=True)
+
 
 # =========================================================
 # Helpers
