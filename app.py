@@ -117,7 +117,6 @@ html, body, [class*="css"], .stApp {
     padding-bottom: 2rem;
 }
 
-/* 全局文本 */
 p, span, label, div, h1, h2, h3, h4, h5, h6 {
     color: var(--text-main);
 }
@@ -130,7 +129,6 @@ h1, h2, h3 {
     color: var(--text-main) !important;
 }
 
-/* 通用玻璃卡片 */
 .glass-card,
 .metric-card,
 .feature-card,
@@ -143,7 +141,6 @@ h1, h2, h3 {
     color: var(--text-main) !important;
 }
 
-/* Hero */
 .hero-box {
     border-radius: 24px;
     padding: 28px 30px;
@@ -165,7 +162,6 @@ h1, h2, h3 {
     pointer-events: none;
 }
 
-/* 卡片 */
 .metric-card {
     border-radius: 20px;
     padding: 20px 22px;
@@ -183,7 +179,6 @@ h1, h2, h3 {
     box-shadow: 0 16px 40px rgba(31, 38, 135, 0.16);
 }
 
-/* Tabs */
 .stTabs [data-baseweb="tab-list"] {
     gap: 10px;
     margin-bottom: 1rem;
@@ -215,7 +210,6 @@ h1, h2, h3 {
     border: 1px solid var(--tab-active-border) !important;
 }
 
-/* 输入框、选择框、文本域 */
 div[data-baseweb="input"] > div,
 div[data-baseweb="select"] > div,
 div[data-baseweb="textarea"] > div {
@@ -238,7 +232,6 @@ textarea::placeholder {
     color: var(--text-muted) !important;
 }
 
-/* 按钮 */
 .stButton > button {
     background: var(--btn-bg);
     color: var(--btn-text) !important;
@@ -259,7 +252,6 @@ textarea::placeholder {
     box-shadow: 0 14px 28px rgba(37,99,235,0.34);
 }
 
-/* DataFrame */
 [data-testid="stDataFrame"] {
     border: 1px solid var(--table-border);
     border-radius: 20px;
@@ -269,7 +261,7 @@ textarea::placeholder {
     -webkit-backdrop-filter: blur(14px);
 }
 
-/* badge */
+
 .status-badge {
     display: inline-block;
     padding: 8px 14px;
@@ -288,7 +280,7 @@ textarea::placeholder {
     font-size: 15px;
 }
 
-/* Streamlit常见容器微玻璃化 */
+
 section[data-testid="stSidebar"] > div {
     background: var(--glass-bg-strong);
     backdrop-filter: blur(18px);
@@ -299,7 +291,7 @@ div[data-testid="stForm"] {
     background: transparent;
 }
 
-/* expander */
+
 details {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
@@ -309,7 +301,6 @@ details {
     padding: 4px 8px;
 }
 
-/* 分割线 */
 hr {
     border: none;
     height: 1px;
@@ -322,7 +313,6 @@ hr {
     margin: 1.2rem 0;
 }
 
-/* 滚动条美化 */
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -335,7 +325,6 @@ hr {
     background: transparent;
 }
 
-/* 隐藏默认元素 */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
@@ -590,8 +579,6 @@ with right:
                 display: inline-block;
                 padding: 6px 14px;
                 border-radius: 20px;
-                background-color: #e8f5e9;
-                color: #2e7d32;
                 font-size: 13px;
                 font-weight: 600;
             ">
