@@ -473,56 +473,43 @@ def to_csv_download(df):
 
 
 def prepare_prediction_input(input_df, feature_columns):
+    """
+    Make input dataframe compatible with training feature columns.
+    Handles:
+    - raw columns
+    - one-hot encoding
+    - training columns with unexpected spaces
+    """
     df_input = input_df.copy()
 
     if feature_columns is None:
         return None
 
-    # 如果刚好原始列就匹配
     if all(col in df_input.columns for col in feature_columns):
         return df_input[feature_columns]
 
-    # 尝试 one-hot 编码
+    for col in df_input.select_dtypes(include="object").columns:
+        df_input[col] = df_input[col].astype(str)
+
     df_encoded = pd.get_dummies(df_input)
 
-    # 补齐缺失列
+    renamed_columns = {}
+    for col in df_encoded.columns:
+        for feat in feature_columns:
+            # 忽略空格比较
+            if col.replace(" ", "") == feat.replace(" ", ""):
+                renamed_columns[col] = feat
+                break
+
+    df_encoded = df_encoded.rename(columns=renamed_columns)
+
     for col in feature_columns:
         if col not in df_encoded.columns:
             df_encoded[col] = 0
 
-    # 仅保留训练列
     df_encoded = df_encoded[feature_columns]
 
     return df_encoded
-    
-    row_count, column_count = df.shape
-    total_cells = row_count * column_count
-
-    missing_cells = df.isna().sum().sum()
-    missing_ratio = (missing_cells / total_cells) * 100 if total_cells > 0 else 100
-
-    duplicate_rows = df.duplicated().sum()
-    duplicate_ratio = (duplicate_rows / row_count) * 100 if row_count > 0 else 100
-
-    numeric_columns = df.select_dtypes(include=np.number).shape[1]
-    numeric_column_ratio = (numeric_columns / column_count) * 100 if column_count > 0 else 0
-
-    score = 100
-    score -= missing_ratio * 0.5
-    score -= duplicate_ratio * 0.3
-    score += numeric_column_ratio * 0.2
-
-    score = max(0, min(100, round(score, 2)))
-
-    details = {
-        "missing_ratio": round(missing_ratio, 2),
-        "duplicate_ratio": round(duplicate_ratio, 2),
-        "numeric_column_ratio": round(numeric_column_ratio, 2),
-        "row_count": row_count,
-        "column_count": column_count
-    }
-
-    return score, details
     
 # =========================================================
 # Load Data / Model
