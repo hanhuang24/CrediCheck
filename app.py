@@ -269,7 +269,61 @@ def data_quality_score(df):
     }
 
     return score, details
+    
+def normalize_prediction_label(prediction):
+    """
+    Normalize model output to readable labels.
+    """
+    if isinstance(prediction, str):
+        pred = prediction.strip().lower()
+        if pred in ["approved", "approve", "yes", "1", "true"]:
+            return "Approved"
+        elif pred in ["rejected", "reject", "no", "0", "false"]:
+            return "Rejected"
+        return str(prediction)
 
+    try:
+        if int(prediction) == 1:
+            return "Approved"
+        elif int(prediction) == 0:
+            return "Rejected"
+    except:
+        pass
+
+    return str(prediction)
+
+
+def to_csv_download(df):
+    return df.to_csv(index=False).encode("utf-8")
+
+
+def prepare_prediction_input(input_df, feature_columns):
+    """
+    Make input dataframe compatible with training feature columns.
+    Handles:
+    - missing columns
+    - one-hot encoded columns like education_Graduate
+    - extra columns removal
+    """
+    df_input = input_df.copy()
+
+    # 如果训练时是原始列，直接补缺失列
+    if all(col in df_input.columns for col in feature_columns):
+        return df_input[feature_columns]
+
+    # 尝试做 one-hot 编码
+    df_encoded = pd.get_dummies(df_input)
+
+    # 补齐缺失列
+    for col in feature_columns:
+        if col not in df_encoded.columns:
+            df_encoded[col] = 0
+
+    # 只保留训练列顺序
+    df_encoded = df_encoded[feature_columns]
+
+    return df_encoded
+    
 # =========================================================
 # Load Data / Model
 # =========================================================
@@ -479,18 +533,23 @@ with tab2:
         "Prediction History"
     ])
 
+    # 初始化历史记录
+    if "prediction_history" not in st.session_state:
+        st.session_state.prediction_history = []
+
     # =====================================================
     # Subtab 1 - Single Prediction
     # =====================================================
     with subtab1:
         st.markdown("### Single Prediction")
 
-        if model is None or feature_columns is None:
-            st.error("Model or feature configuration is unavailable.")
+        if model is None:
+            st.error("Model is unavailable. Please check whether deployment_package.pkl contains a valid model.")
+        elif feature_columns is None:
+            st.error("Feature column configuration is unavailable. Please check whether deployment_package.pkl contains 'feature_columns'.")
         else:
             st.write("Enter applicant information to generate a prediction.")
 
-            # 示例输入项，你需要按你原来的变量名替换
             no_of_dependents = st.number_input("Number of Dependents", min_value=0, step=1)
             income_annum = st.number_input("Annual Income", min_value=0.0, step=1000.0)
             loan_amount = st.number_input("Loan Amount", min_value=0.0, step=1000.0)
@@ -519,7 +578,7 @@ with tab2:
                         "self_employed": self_employed
                     }])
 
-                    pred_input = input_df[feature_columns].copy()
+                    pred_input = prepare_prediction_input(input_df, feature_columns)
 
                     if scaler is not None:
                         pred_input_transformed = scaler.transform(pred_input)
@@ -527,17 +586,43 @@ with tab2:
                         pred_input_transformed = pred_input
 
                     prediction = model.predict(pred_input_transformed)[0]
+                    prediction_label = normalize_prediction_label(prediction)
 
-                    st.success(f"Prediction Result: {normalize_prediction_label(prediction)}")
+                    st.success(f"Prediction Result: {prediction_label}")
+
+                    approved_prob = None
+                    rejected_prob = None
 
                     if hasattr(model, "predict_proba"):
                         proba = model.predict_proba(pred_input_transformed)[0]
                         if len(proba) >= 2:
-                            st.write(f"Rejected Probability: **{round(float(proba[0]) * 100, 2)}%**")
-                            st.write(f"Approved Probability: **{round(float(proba[1]) * 100, 2)}%**")
+                            rejected_prob = round(float(proba[0]) * 100, 2)
+                            approved_prob = round(float(proba[1]) * 100, 2)
+                            st.write(f"Rejected Probability: **{rejected_prob}%**")
+                            st.write(f"Approved Probability: **{approved_prob}%**")
+
+                    # 保存历史记录
+                    history_record = {
+                        "no_of_dependents": no_of_dependents,
+                        "income_annum": income_annum,
+                        "loan_amount": loan_amount,
+                        "loan_term": loan_term,
+                        "cibil_score": cibil_score,
+                        "residential_assets_value": residential_assets_value,
+                        "commercial_assets_value": commercial_assets_value,
+                        "luxury_assets_value": luxury_assets_value,
+                        "bank_asset_value": bank_asset_value,
+                        "education": education,
+                        "self_employed": self_employed,
+                        "prediction": prediction_label,
+                        "rejected_probability": rejected_prob,
+                        "approved_probability": approved_prob
+                    }
+                    st.session_state.prediction_history.append(history_record)
 
                 except Exception as e:
                     st.error(f"Prediction failed: {e}")
+                    st.write("Debug - feature_columns:", feature_columns)
             else:
                 st.caption("No prediction has been generated yet.")
 
@@ -546,12 +631,14 @@ with tab2:
     # =====================================================
     with subtab2:
         st.markdown("### Batch Prediction via CSV")
-        st.write("Upload a CSV file containing the required model feature columns for batch scoring.")
+        st.write("Upload a CSV file containing applicant information for batch scoring.")
 
-        if feature_columns is None:
+        if model is None:
+            st.error("Model is unavailable. Batch prediction cannot be performed.")
+        elif feature_columns is None:
             st.warning("Feature column information is unavailable. Batch prediction cannot be performed.")
         else:
-            st.write("#### Required Feature Columns")
+            st.write("#### Required Training Feature Columns")
             st.dataframe(pd.DataFrame({"feature_columns": feature_columns}), use_container_width=True)
 
             uploaded_file = st.file_uploader(
@@ -570,50 +657,44 @@ with tab2:
                     st.write("#### Uploaded Data Preview")
                     st.dataframe(batch_df.head(), use_container_width=True)
 
-                    missing_features = [col for col in feature_columns if col not in batch_df.columns]
+                    # 尝试自动处理输入
+                    pred_input = prepare_prediction_input(batch_df, feature_columns)
 
-                    if missing_features:
-                        st.error(f"Missing required feature columns: {missing_features}")
+                    if scaler is not None:
+                        pred_input_transformed = scaler.transform(pred_input)
                     else:
-                        pred_input = batch_df[feature_columns].copy()
+                        pred_input_transformed = pred_input
 
-                        if scaler is not None:
-                            pred_input_transformed = scaler.transform(pred_input)
-                        else:
-                            pred_input_transformed = pred_input
+                    batch_pred = model.predict(pred_input_transformed)
 
-                        batch_pred = model.predict(pred_input_transformed)
+                    batch_result = batch_df.copy()
+                    batch_result["prediction"] = [normalize_prediction_label(p) for p in batch_pred]
 
-                        batch_result = batch_df.copy()
-                        batch_result["prediction"] = [normalize_prediction_label(p) for p in batch_pred]
+                    if hasattr(model, "predict_proba"):
+                        batch_proba = model.predict_proba(pred_input_transformed)
+                        if batch_proba.shape[1] >= 2:
+                            batch_result["rejected_probability"] = np.round(batch_proba[:, 0] * 100, 2)
+                            batch_result["approved_probability"] = np.round(batch_proba[:, 1] * 100, 2)
 
-                        if hasattr(model, "predict_proba"):
-                            batch_proba = model.predict_proba(pred_input_transformed)
-                            if batch_proba.shape[1] >= 2:
-                                batch_result["rejected_probability"] = np.round(batch_proba[:, 0] * 100, 2)
-                                batch_result["approved_probability"] = np.round(batch_proba[:, 1] * 100, 2)
+                    st.write("#### Batch Prediction Results")
+                    st.dataframe(batch_result, use_container_width=True)
 
-                        st.write("#### Batch Prediction Results")
-                        st.dataframe(batch_result, use_container_width=True)
-
-                        st.download_button(
-                            "Download Prediction Results CSV",
-                            data=to_csv_download(batch_result),
-                            file_name="batch_prediction_results.csv",
-                            mime="text/csv"
-                        )
+                    st.download_button(
+                        "Download Prediction Results CSV",
+                        data=to_csv_download(batch_result),
+                        file_name="batch_prediction_results.csv",
+                        mime="text/csv"
+                    )
 
                 except Exception as e:
                     st.error(f"Batch prediction failed: {e}")
+                    st.write("Debug - expected feature_columns:", feature_columns)
 
     # =====================================================
     # Subtab 3 - Prediction History
     # =====================================================
     with subtab3:
         st.markdown("### Prediction History")
-
-        if "prediction_history" not in st.session_state:
-            st.session_state.prediction_history = []
 
         if len(st.session_state.prediction_history) == 0:
             st.info("No prediction history is currently available.")
@@ -628,6 +709,10 @@ with tab2:
                 mime="text/csv"
             )
 
+            if st.button("Clear Prediction History", use_container_width=True):
+                st.session_state.prediction_history = []
+                st.success("Prediction history cleared.")
+                st.rerun()
 # =========================================================
 # Tab 3 - Risk Management Guidelines
 # =========================================================
