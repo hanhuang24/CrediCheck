@@ -149,6 +149,46 @@ footer {visibility: hidden;}
 header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
+/* =========================
+   DataFrame / Table White Theme
+   ========================= */
+[data-testid="stDataFrame"] {
+    background-color: white !important;
+    color: #1f1f1f !important;
+    border: 1px solid #dbe8f5 !important;
+    border-radius: 18px !important;
+    overflow: hidden !important;
+}
+
+[data-testid="stDataFrame"] * {
+    color: #1f1f1f !important;
+}
+
+[data-testid="stDataFrame"] div[role="table"] {
+    background-color: white !important;
+}
+
+[data-testid="stDataFrame"] .glideDataEditor {
+    background-color: white !important;
+    color: #1f1f1f !important;
+}
+
+[data-testid="stDataFrame"] .gdg-container {
+    background-color: white !important;
+    color: #1f1f1f !important;
+}
+
+[data-testid="stDataFrame"] .gdg-header,
+[data-testid="stDataFrame"] .gdg-header-row,
+[data-testid="stDataFrame"] .gdg-row,
+[data-testid="stDataFrame"] .gdg-cell {
+    background-color: white !important;
+    color: #1f1f1f !important;
+}
+
+[data-testid="stDataFrame"] canvas {
+    background-color: white !important;
+}
 
 # =========================================================
 # Helpers
