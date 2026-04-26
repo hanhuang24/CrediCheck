@@ -158,56 +158,34 @@ def load_data():
     file_path = os.path.join(BASE_DIR, 
 "loan_approval_dataset.csv"
 )
-    if not
- os.path.exists(file_path):
+    if not os.path.exists(file_path):
         return None
 
-    try
-:
+    try:
         df = pd.read_csv(file_path)
-        df.columns = df.columns.
-str
-.strip()
-        return
- df
-    except
- Exception:
+        df.columns = df.columns.str.strip()
+        return df
+    except Exception:
         return None
 
 
 @st.cache_resource
 def load_package():
-    package_path = os.path.join(BASE_DIR, 
-"deployment_package.pkl"
-)
+    package_path = os.path.join(BASE_DIR, "deployment_package.pkl")
 
-    if not
- os.path.exists(package_path):
+    if not os.path.exists(package_path):
         return None, None, None, None, None
 
-    try
-:
-        with open(package_path, "rb") as
- f:
+    try:
+        with open(package_path, "rb") as f:
             package = pickle.load(f)
 
-        return
- (
-            package.get(
-"model"
-),
-            package.get(
-"feature_columns"
-),
-            package.get(
-"scaler"
-),
-            package.get(
-"model_name"
-),
-            package.get(
-"metrics"
-)
+        return (
+            package.get("model"),
+            package.get("feature_columns"),
+            package.get("scaler"),
+            package.get("model_name"),
+            package.get("metrics")
         )
     except
  Exception:
