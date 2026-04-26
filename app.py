@@ -29,293 +29,38 @@ st.set_page_config(
 st.markdown(
 """
 <style>
-/* =========================
-   Global
-========================= */
 html, body, [class*="css"] {
-    font-family: "Segoe UI", "Inter", "Helvetica Neue", sans-serif;
+    font-family: "Segoe UI", "Inter", sans-serif;
 }
 
 .stApp {
     background:
-        radial-gradient(circle at top left, rgba(84, 149, 255, 0.12), transparent 28%),
-        radial-gradient(circle at top right, rgba(52, 103, 200, 0.12), transparent 24%),
+        radial-gradient(circle at top left, rgba(84,149,255,0.10), transparent 28%),
+        radial-gradient(circle at top right, rgba(52,103,200,0.10), transparent 24%),
         linear-gradient(180deg, #f4f9ff 0%, #edf5ff 55%, #eaf3ff 100%);
 }
 
 .block-container {
-    max-width: 1320px;
+    max-width: 1280px;
     padding-top: 1rem;
-    padding-bottom: 2.5rem;
+    padding-bottom: 2rem;
 }
 
-/* =========================
-   Brand Hero
-========================= */
-.hero-shell {
-    position: relative;
-    overflow: hidden;
-    border-radius: 28px;
-    background: linear-gradient(135deg, #0d2e57 0%, #154b89 48%, #2d77dd 100%);
-    color: white;
-    padding: 30px 32px;
-    margin-bottom: 1rem;
-    box-shadow: 0 18px 40px rgba(15, 46, 87, 0.22);
-    border: 1px solid rgba(255,255,255,0.10);
-}
-
-.hero-shell::before {
-    content: "";
-    position: absolute;
-    top: -60px;
-    right: -60px;
-    width: 220px;
-    height: 220px;
-    background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 70%);
-    border-radius: 50%;
-}
-
-.hero-shell::after {
-    content: "";
-    position: absolute;
-    bottom: -80px;
-    left: -80px;
-    width: 260px;
-    height: 260px;
-    background: radial-gradient(circle, rgba(255,255,255,0.10), transparent 70%);
-    border-radius: 50%;
-}
-
-.hero-grid {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 22px;
-    flex-wrap: wrap;
-}
-
-.hero-left {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    z-index: 2;
-}
-
-.logo-box {
-    width: 78px;
-    height: 78px;
-    border-radius: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background:
-        linear-gradient(145deg, rgba(255,255,255,0.22), rgba(255,255,255,0.08));
-    border: 1px solid rgba(255,255,255,0.18);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 10px 24px rgba(0,0,0,0.15);
-    font-size: 34px;
-    font-weight: 800;
-}
-
-.logo-text-main {
-    font-size: 2.1rem;
-    font-weight: 800;
-    letter-spacing: 0.2px;
-    margin-bottom: 0.1rem;
-}
-
-.logo-text-sub {
-    font-size: 0.98rem;
-    opacity: 0.95;
-    line-height: 1.55;
-    max-width: 760px;
-}
-
-.hero-badges {
-    margin-top: 14px;
-}
-
-.hero-badge {
-    display: inline-block;
-    padding: 7px 12px;
-    margin-right: 8px;
-    margin-bottom: 8px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.14);
-    font-size: 0.86rem;
-    backdrop-filter: blur(6px);
-}
-
-.hero-right {
-    min-width: 280px;
-    z-index: 2;
-}
-
-.hero-mini-panel {
-    background: rgba(255,255,255,0.10);
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 20px;
-    padding: 16px 18px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 22px rgba(0,0,0,0.10);
-}
-
-.hero-mini-title {
-    font-size: 0.84rem;
-    opacity: 0.9;
-    margin-bottom: 6px;
-}
-
-.hero-mini-value {
-    font-size: 1.15rem;
-    font-weight: 800;
-    margin-bottom: 10px;
-}
-
-.hero-mini-note {
-    font-size: 0.9rem;
-    opacity: 0.92;
-}
-
-/* =========================
-   Titles
-========================= */
-.main-title {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #10365d;
-    margin-bottom: 0.2rem;
-}
-
-.sub-title {
-    font-size: 1rem;
-    color: #5f7893;
-    margin-bottom: 1.15rem;
-}
-
-.section-title {
-    font-size: 1.08rem;
-    font-weight: 700;
-    color: #14426f;
-    margin-bottom: 0.7rem;
-}
-
-/* =========================
-   Cards
-========================= */
-.card {
-    background: rgba(255,255,255,0.90);
-    border: 1px solid #dce8f5;
-    border-radius: 24px;
-    padding: 1.2rem 1.2rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 14px 30px rgba(20, 66, 111, 0.07);
-    backdrop-filter: blur(6px);
-}
-
-.glass-card {
-    background: rgba(255,255,255,0.72);
-    border: 1px solid rgba(214, 228, 244, 0.9);
-    border-radius: 24px;
-    padding: 1.2rem 1.2rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 14px 30px rgba(20, 66, 111, 0.07);
-    backdrop-filter: blur(10px);
-}
-
-.hero-card {
-    background: linear-gradient(135deg, #f8fbff 0%, #eef6ff 100%);
-    border: 1px solid #d9e8f8;
-    border-radius: 24px;
-    padding: 1.25rem 1.3rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 10px 24px rgba(25, 87, 178, 0.07);
-}
-
-.card-title {
-    font-size: 1.08rem;
-    font-weight: 700;
-    color: #14416c;
-    margin-bottom: 0.8rem;
-}
-
-/* =========================
-   KPI
-========================= */
-.kpi-box {
-    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
-    border: 1px solid #dbe8f5;
-    border-radius: 20px;
-    padding: 1rem;
-    text-align: center;
-    box-shadow: 0 8px 18px rgba(20, 66, 111, 0.05);
-}
-
-.kpi-title {
-    color: #67809a;
-    font-size: 0.88rem;
-    margin-bottom: 0.35rem;
-}
-
-.kpi-value {
-    color: #10365d;
-    font-size: 1.45rem;
-    font-weight: 800;
-}
-
-/* =========================
-   Result / Alerts
-========================= */
-.result-approved {
-    background: linear-gradient(135deg, #eef7ff 0%, #e4f1ff 100%);
-    border: 1px solid #9fcbff;
-    border-radius: 18px;
-    padding: 1rem 1.05rem;
-    color: #0f4e83;
-    box-shadow: 0 8px 18px rgba(44, 116, 216, 0.08);
-}
-
-.result-rejected {
-    background: linear-gradient(135deg, #f6faff 0%, #edf5ff 100%);
-    border: 1px solid #bdd8fa;
-    border-radius: 18px;
-    padding: 1rem 1.05rem;
-    color: #10365d;
-    box-shadow: 0 8px 18px rgba(44, 116, 216, 0.08);
-}
-
-.notice-box {
-    background: #eef6ff;
-    border: 1px solid #b9d8f8;
-    border-radius: 16px;
-    padding: 0.95rem 1rem;
-    margin-top: 0.75rem;
-    color: #18456f;
-}
-
-.small-note {
-    color: #6a8197;
-    font-size: 0.92rem;
-}
-
-/* =========================
-   Tabs
-========================= */
+/* Tabs */
 .stTabs [data-baseweb="tab-list"] {
     gap: 12px;
     margin-bottom: 1rem;
 }
 
 .stTabs [data-baseweb="tab"] {
-    height: 52px;
-    white-space: pre-wrap;
-    background: rgba(255,255,255,0.88);
-    border-radius: 16px;
-    color: #18456f;
+    height: 50px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 14px;
     border: 1px solid #dce8f5;
-    padding: 0 18px;
+    color: #18456f;
     font-weight: 700;
-    box-shadow: 0 6px 14px rgba(20, 66, 111, 0.05);
+    padding: 0 18px;
+    box-shadow: 0 4px 12px rgba(20,66,111,0.05);
 }
 
 .stTabs [aria-selected="true"] {
@@ -324,30 +69,23 @@ html, body, [class*="css"] {
     border: 1px solid #2d77dd !important;
 }
 
-/* =========================
-   Inputs / Button
-========================= */
+/* Inputs */
 div[data-baseweb="input"] > div,
 div[data-baseweb="select"] > div {
     border-radius: 14px !important;
     border: 1px solid #d4e3f3 !important;
-    background: rgba(255,255,255,0.92) !important;
-}
-
-.stNumberInput label, .stSelectbox label {
-    font-weight: 600 !important;
-    color: #234d78 !important;
+    background: rgba(255,255,255,0.95) !important;
 }
 
 .stButton > button {
     background: linear-gradient(135deg, #1957b2 0%, #2d77dd 100%);
     color: white;
     border: none;
-    border-radius: 16px;
+    border-radius: 14px;
     padding: 0.8rem 1rem;
     font-size: 1rem;
     font-weight: 800;
-    box-shadow: 0 10px 24px rgba(25, 87, 178, 0.18);
+    box-shadow: 0 10px 22px rgba(25,87,178,0.18);
 }
 
 .stButton > button:hover {
@@ -355,18 +93,13 @@ div[data-baseweb="select"] > div {
     color: white;
 }
 
-/* =========================
-   Dataframe
-========================= */
+/* Dataframe */
 [data-testid="stDataFrame"] {
     border: 1px solid #dbe8f5;
     border-radius: 18px;
     overflow: hidden;
 }
 
-/* =========================
-   Hide Streamlit chrome
-========================= */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
