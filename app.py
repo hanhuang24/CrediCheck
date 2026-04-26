@@ -231,23 +231,42 @@ def info_card(title, text):
     """, unsafe_allow_html=True)
 
 def data_quality_score(df):
-    """
-    Calculate a simple data quality score based on:
-    - missing values
-    - duplicate rows
-    - numeric column availability
-    Returns:
-        score: float (0-100)
-        details: dict
-    """
+    default_details = {
+        "completeness": 0,
+        "uniqueness": 0,
+        "validity": 0,
+        "consistency": 0
+    }
+
     if df is None or df.empty:
-        return 0, {
-            "missing_ratio": 100.0,
-            "duplicate_ratio": 100.0,
-            "numeric_column_ratio": 0.0,
-            "row_count": 0,
-            "column_count": 0
-        }
+        return 0, default_details
+
+    total_cells = df.shape[0] * df.shape[1]
+    missing_cells = df.isna().sum().sum()
+
+    completeness = 100 - (missing_cells / total_cells * 100) if total_cells > 0 else 0
+
+    duplicate_rows = df.duplicated().sum()
+    uniqueness = 100 - (duplicate_rows / len(df) * 100) if len(df) > 0 else 0
+
+    validity = 100
+    consistency = 100
+
+    completeness = max(0, round(completeness, 2))
+    uniqueness = max(0, round(uniqueness, 2))
+    validity = max(0, round(validity, 2))
+    consistency = max(0, round(consistency, 2))
+
+    score = round((completeness + uniqueness + validity + consistency) / 4, 2)
+
+    quality_details = {
+        "completeness": completeness,
+        "uniqueness": uniqueness,
+        "validity": validity,
+        "consistency": consistency
+    }
+
+    return score, quality_details
 def normalize_prediction_label(prediction):
     if isinstance(prediction, str):
         pred = prediction.strip().lower()
