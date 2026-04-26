@@ -23,21 +23,92 @@ st.set_page_config(
 # =========================================================
 st.markdown("""
 <style>
+:root {
+    --bg-main: linear-gradient(180deg, #f4f9ff 0%, #edf5ff 55%, #eaf3ff 100%);
+    --bg-accent-1: rgba(84,149,255,0.10);
+    --bg-accent-2: rgba(52,103,200,0.10);
+
+    --text-main: #1f1f1f;
+    --text-muted: #6B7280;
+    --card-bg: rgba(255,255,255,0.92);
+    --card-border: #dbe8f5;
+    --input-bg: rgba(255,255,255,0.95);
+    --input-border: #d4e3f3;
+
+    --tab-bg: rgba(255,255,255,0.94);
+    --tab-text: #18456f;
+    --tab-border: #dce8f5;
+    --tab-active-bg: linear-gradient(135deg, #1957b2 0%, #2d77dd 100%);
+    --tab-active-text: #ffffff;
+    --tab-active-border: #2d77dd;
+
+    --btn-bg: linear-gradient(135deg, #1957b2 0%, #2d77dd 100%);
+    --btn-hover-bg: linear-gradient(135deg, #144a98 0%, #2466c8 100%);
+    --btn-text: #ffffff;
+
+    --shadow: 0 8px 24px rgba(20,66,111,0.06);
+    --hero-bg: rgba(255,255,255,0.78);
+    --hero-border: #dce8f5;
+
+    --badge-bg: rgba(34,197,94,0.12);
+    --badge-text: #15803d;
+    --badge-border: rgba(34,197,94,0.25);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-main: linear-gradient(180deg, #0f172a 0%, #111827 55%, #0b1220 100%);
+        --bg-accent-1: rgba(84,149,255,0.12);
+        --bg-accent-2: rgba(52,103,200,0.10);
+
+        --text-main: #e5e7eb;
+        --text-muted: #9ca3af;
+        --card-bg: rgba(30, 41, 59, 0.88);
+        --card-border: rgba(148, 163, 184, 0.18);
+        --input-bg: rgba(30, 41, 59, 0.92);
+        --input-border: rgba(148, 163, 184, 0.22);
+
+        --tab-bg: rgba(30, 41, 59, 0.92);
+        --tab-text: #e5e7eb;
+        --tab-border: rgba(148, 163, 184, 0.18);
+        --tab-active-bg: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+        --tab-active-text: #ffffff;
+        --tab-active-border: #3b82f6;
+
+        --btn-bg: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+        --btn-hover-bg: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+        --btn-text: #ffffff;
+
+        --shadow: 0 8px 24px rgba(0,0,0,0.28);
+        --hero-bg: rgba(15, 23, 42, 0.72);
+        --hero-border: rgba(148, 163, 184, 0.18);
+
+        --badge-bg: rgba(34,197,94,0.16);
+        --badge-text: #86efac;
+        --badge-border: rgba(34,197,94,0.28);
+    }
+}
+
 html, body, [class*="css"], .stApp {
     font-family: "Segoe UI", "Inter", sans-serif;
-    color: #1f1f1f !important;
+    color: var(--text-main) !important;
 }
+
 .stApp {
     background:
-        radial-gradient(circle at top left, rgba(84,149,255,0.10), transparent 28%),
-        radial-gradient(circle at top right, rgba(52,103,200,0.10), transparent 24%),
-        linear-gradient(180deg, #f4f9ff 0%, #edf5ff 55%, #eaf3ff 100%);
+        radial-gradient(circle at top left, var(--bg-accent-1), transparent 28%),
+        radial-gradient(circle at top right, var(--bg-accent-2), transparent 24%),
+        var(--bg-main);
 }
 
 .block-container {
     max-width: 1280px;
     padding-top: 1rem;
     padding-bottom: 2rem;
+}
+
+p, span, label, div, h1, h2, h3, h4, h5, h6 {
+    color: var(--text-main);
 }
 
 .stTabs [data-baseweb="tab-list"] {
@@ -48,32 +119,43 @@ html, body, [class*="css"], .stApp {
 
 .stTabs [data-baseweb="tab"] {
     height: 50px;
-    background: rgba(255,255,255,0.94);
+    background: var(--tab-bg);
     border-radius: 14px;
-    border: 1px solid #dce8f5;
-    color: #18456f;
+    border: 1px solid var(--tab-border);
+    color: var(--tab-text) !important;
     font-weight: 700;
     padding: 0 18px;
     box-shadow: 0 4px 12px rgba(20,66,111,0.05);
 }
 
 .stTabs [aria-selected="true"] {
-    background: linear-gradient(135deg, #1957b2 0%, #2d77dd 100%) !important;
-    color: white !important;
-    border: 1px solid #2d77dd !important;
+    background: var(--tab-active-bg) !important;
+    color: var(--tab-active-text) !important;
+    border: 1px solid var(--tab-active-border) !important;
 }
 
 div[data-baseweb="input"] > div,
 div[data-baseweb="select"] > div,
 div[data-baseweb="textarea"] > div {
     border-radius: 14px !important;
-    border: 1px solid #d4e3f3 !important;
-    background: rgba(255,255,255,0.95) !important;
+    border: 1px solid var(--input-border) !important;
+    background: var(--input-bg) !important;
+    color: var(--text-main) !important;
+}
+
+input, textarea, select {
+    color: var(--text-main) !important;
+    background: transparent !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-muted) !important;
 }
 
 .stButton > button {
-    background: linear-gradient(135deg, #1957b2 0%, #2d77dd 100%);
-    color: white;
+    background: var(--btn-bg);
+    color: var(--btn-text);
     border: none;
     border-radius: 14px;
     padding: 0.8rem 1rem;
@@ -83,55 +165,62 @@ div[data-baseweb="textarea"] > div {
 }
 
 .stButton > button:hover {
-    background: linear-gradient(135deg, #144a98 0%, #2466c8 100%);
-    color: white;
+    background: var(--btn-hover-bg);
+    color: var(--btn-text);
 }
 
 [data-testid="stDataFrame"] {
-    border: 1px solid #dbe8f5;
+    border: 1px solid var(--card-border);
     border-radius: 18px;
     overflow: hidden;
 }
 
 .metric-card {
-    background: rgba(255,255,255,0.92);
-    border: 1px solid #dbe8f5;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 18px;
     padding: 20px 22px;
-    box-shadow: 0 8px 24px rgba(20,66,111,0.06);
+    box-shadow: var(--shadow);
+    color: var(--text-main);
 }
 
 .feature-card {
-    background: rgba(255,255,255,0.94);
-    border: 1px solid #dbe8f5;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 18px;
     padding: 22px;
-    box-shadow: 0 8px 24px rgba(20,66,111,0.06);
+    box-shadow: var(--shadow);
     min-height: 180px;
+    color: var(--text-main);
 }
 
 .hero-box {
-    background: rgba(255,255,255,0.78);
-    border: 1px solid #dce8f5;
+    background: var(--hero-bg);
+    border: 1px solid var(--hero-border);
     border-radius: 22px;
     padding: 24px 28px;
     box-shadow: 0 10px 28px rgba(20,66,111,0.08);
+    color: var(--text-main);
 }
 
 .status-badge {
     display: inline-block;
     padding: 8px 14px;
     border-radius: 999px;
-    background: rgba(34,197,94,0.12);
-    color: #15803d;
+    background: var(--badge-bg);
+    color: var(--badge-text) !important;
     font-weight: 700;
     font-size: 14px;
-    border: 1px solid rgba(34,197,94,0.25);
+    border: 1px solid var(--badge-border);
 }
 
 .small-muted {
-    color: #6B7280;
+    color: var(--text-muted) !important;
     font-size: 15px;
+}
+
+[data-testid="stMarkdownContainer"] * {
+    color: var(--text-main);
 }
 
 #MainMenu {visibility: hidden;}
@@ -139,7 +228,6 @@ footer {visibility: hidden;}
 header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
-
 
 # =========================================================
 # Helpers
