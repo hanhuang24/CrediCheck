@@ -154,8 +154,7 @@ header {visibility: hidden;}
 # Helpers
 # =========================================================
 @st.cache_data
-def load_data
-():
+def load_data():
     file_path = os.path.join(BASE_DIR, 
 "loan_approval_dataset.csv"
 )
@@ -177,8 +176,7 @@ str
 
 
 @st.cache_resource
-def load_package
-():
+def load_package():
     package_path = os.path.join(BASE_DIR, 
 "deployment_package.pkl"
 )
