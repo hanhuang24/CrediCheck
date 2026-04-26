@@ -6,11 +6,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from PIL import Image
-import os
-import pickle
-import pandas as pd
-import streamlit as st
-from PIL import Image
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # =========================================================
 # Page Config
@@ -339,60 +334,6 @@ def prepare_prediction_input(input_df, feature_columns):
     }
 
     return score, details
-    
-def normalize_prediction_label(prediction):
-    """
-    Normalize model output to readable labels.
-    """
-    if isinstance(prediction, str):
-        pred = prediction.strip().lower()
-        if pred in ["approved", "approve", "yes", "1", "true"]:
-            return "Approved"
-        elif pred in ["rejected", "reject", "no", "0", "false"]:
-            return "Rejected"
-        return str(prediction)
-
-    try:
-        if int(prediction) == 1:
-            return "Approved"
-        elif int(prediction) == 0:
-            return "Rejected"
-    except:
-        pass
-
-    return str(prediction)
-
-
-def to_csv_download(df):
-    return df.to_csv(index=False).encode("utf-8")
-
-
-def prepare_prediction_input(input_df, feature_columns):
-    """
-    Make input dataframe compatible with training feature columns.
-    Handles:
-    - missing columns
-    - one-hot encoded columns like education_Graduate
-    - extra columns removal
-    """
-    df_input = input_df.copy()
-
-    # 如果训练时是原始列，直接补缺失列
-    if all(col in df_input.columns for col in feature_columns):
-        return df_input[feature_columns]
-
-    # 尝试做 one-hot 编码
-    df_encoded = pd.get_dummies(df_input)
-
-    # 补齐缺失列
-    for col in feature_columns:
-        if col not in df_encoded.columns:
-            df_encoded[col] = 0
-
-    # 只保留训练列顺序
-    df_encoded = df_encoded[feature_columns]
-
-    return df_encoded
     
 # =========================================================
 # Load Data / Model
