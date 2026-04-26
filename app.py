@@ -187,8 +187,7 @@ def load_package():
             package.get("model_name"),
             package.get("metrics")
         )
-    except
- Exception:
+    except Exception:
         return None, None, None, None, None
 
 def find_target_column(df):
