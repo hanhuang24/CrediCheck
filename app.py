@@ -104,6 +104,7 @@ div[data-baseweb="textarea"] > div {
     border-radius: 18px;
     padding: 20px 22px;
     box-shadow: 0 8px 24px rgba(20,66,111,0.06);
+    color: #1f1f1f !important;
 }
 
 .feature-card {
@@ -113,6 +114,7 @@ div[data-baseweb="textarea"] > div {
     padding: 22px;
     box-shadow: 0 8px 24px rgba(20,66,111,0.06);
     min-height: 180px;
+    color: #1f1f1f !important;
 }
 
 .hero-box {
@@ -121,6 +123,7 @@ div[data-baseweb="textarea"] > div {
     border-radius: 22px;
     padding: 24px 28px;
     box-shadow: 0 10px 28px rgba(20,66,111,0.08);
+    color: #1f1f1f !important;
 }
 
 .status-badge {
@@ -138,7 +141,9 @@ div[data-baseweb="textarea"] > div {
     color: #6B7280;
     font-size: 15px;
 }
-
+h1, h2, h3, h4, h5, h6, p, div, span, label {
+    color: #1f1f1f !important;
+}
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
