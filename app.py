@@ -28,10 +28,10 @@ st.set_page_config(
 # =========================================================
 st.markdown("""
 <style>
-html, body, [class*="css"] {
+html, body, [class*="css"], .stApp {
     font-family: "Segoe UI", "Inter", sans-serif;
+    color: #1f1f1f !important;
 }
-
 .stApp {
     background:
         radial-gradient(circle at top left, rgba(84,149,255,0.10), transparent 28%),
