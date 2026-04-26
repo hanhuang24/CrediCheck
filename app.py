@@ -172,9 +172,6 @@ def load_data():
 def load_package():
     package_path = os.path.join(BASE_DIR, "deployment_package.pkl")
 
-    st.write("Looking for:", package_path)
-    st.write("Exists:", os.path.exists(package_path))
-
     if not os.path.exists(package_path):
         st.error("deployment_package.pkl does not exist at expected path")
         return None, None, None, None, None
@@ -182,9 +179,6 @@ def load_package():
     try:
         with open(package_path, "rb") as f:
             package = pickle.load(f)
-
-        st.success("deployment_package.pkl loaded successfully")
-        st.write("Package keys:", list(package.keys()) if isinstance(package, dict) else type(package))
 
         return (
             package.get("model"),
