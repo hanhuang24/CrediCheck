@@ -8,7 +8,7 @@ CrediCheck is a Streamlit-based interactive loan approval decision-support dashb
 
 - **Streamlit App:** https://credicheck-yj2eqrickemdqmjctdesnt.streamlit.app/
 - **GitHub Repository:** https://github.com/hanhuang24/CrediCheck
-- **Demo Video:** https://video.xjtlu.edu.cn/Mediasite/MyMediasite/embedded/presentations/b6ce11ff89a241c5a8770a230f13c3bd1d
+- **Demo Video:** https://video.xjtlu.edu.cn/Mediasite/MyMediasite/embedded/presentations/6aee3d4b6bc14ebea182e82fc83ab1b01d
 
 ---
 
