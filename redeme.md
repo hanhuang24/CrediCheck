@@ -3,9 +3,8 @@
 **Module:** ACC102  
 **Track:** Track 4 – Interactive Data Analysis Tool  
 **Repository Link:** https://github.com/hanhuang24/CrediCheck  
-**App Link:** [Insert your app link here, if available]  
-**Demo Video:** [Insert your 1–3 minute Mediasite video link here]  
-
+**App Link:**  https://credicheck-yj2eqrickemdqmjctdesnt.streamlit.app/  
+**Demo Video:**  https://video.xjtlu.edu.cn/Mediasite/MyMediasite/embedded/presentations/6aee3d4b6bc14ebea182e82fc83ab1b01d
 ---
 
 ## 1. Project Overview
@@ -45,17 +44,17 @@ These users may benefit from a simple interface that combines data exploration w
 ## 4. Dataset
 
 - **Dataset name:** `loan_approval_dataset.csv`  
-- **Source:** [Insert original dataset source link here]  
-- **Date accessed:** [Insert access date here]  
+- **Source:**   https://www.kaggle.com/datasets/architsharma01/loan-approval-prediction-dataset
+- **Date accessed:** 2026.4.27  
 
 ### Main variables include:
-- applicant income  
-- co-applicant income  
-- loan amount  
-- loan term  
-- credit history  
-- education  
-- self-employment status  
+- Number of Dependents of the Applicant  
+- Education of the Applicant  
+- Employment Status of the Applicant 
+- Annual Income of the Applicant  
+- Loan Amount  
+- Loan Term in Years  
+- Credit Score  
 - residential asset value  
 - commercial asset value  
 - luxury asset value  
@@ -141,5 +140,6 @@ CrediCheck/
 ├── notebook.ipynb
 ├── loan_approval_dataset.csv
 ├── requirements.txt
-├── figures/                # optional: charts or screenshots
-└── models/                 # optional: saved model files
+├── deployment_package.pkl
+├── logo.png
+└── user_feedback.txt                          
