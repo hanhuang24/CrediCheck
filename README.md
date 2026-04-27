@@ -143,3 +143,96 @@ CrediCheck/
 ├── deployment_package.pkl
 ├── logo.png
 └── user_feedback.txt                          
+```
+---
+
+## 9. How to Run the Project Locally
+This Track 4 project is designed to run locally after cloning the repository.  
+(If the download fails and the app cannot be run, you can directly click on the app link to view it.)
+### Step 1: Clone the repository
+git clone https://github.com/hanhuang24/CrediCheck.git  
+cd CrediCheck
+### Step 2: Install required packages
+pip install -r requirements.txt
+### Step 3: Run the Streamlit app
+streamlit run app.py
+### Step 4: Open the app
+After the command runs, Streamlit will provide a local URL in the terminal, usually:  
+http://localhost:8501
+
+---
+
+## 10. Required Packages
+Typical packages used in this project include:  
+- pandas  
+- numpy  
+- matplotlib  
+- seaborn  
+- scikit-learn  
+- streamlit
+
+All required packages should be listed in requirements.txt.
+
+---
+
+## 11.Key Outputs
+This project produces two main types of outputs:  
+
+Analytical Outputs
+- summary statistics and data exploration results
+- comparisons between approved and rejected applicants
+- visualisations of important variables
+
+Interactive Outputs
+- user-entered applicant profile
+- model-based prediction result
+- a simple interface for interpreting loan-related risk patterns
+
+The tool demonstrates how Python analysis can be transformed into a practical user-facing product.
+
+---
+
+## 12. Interpretation and Value
+The project suggests that applicant-level characteristics such as income, credit history, and asset-related variables may be associated with loan approval outcomes.  
+The value of the tool is not that it makes real lending decisions, but that it helps users:  
+- understand how structured applicant data can be analysed
+- see how a predictive workflow can be implemented in Python
+- interact with a simple data product rather than only reading notebook outputs
+
+---
+
+## 13. Limitations
+This project has several important limitations:  
+
+- the dataset is relatively simple and may not fully represent real-world lending environments
+- the model is intended for educational demonstration only
+- predictions should not be used as real financial decisions
+- some important real-world factors may not be included in the dataset
+- model outputs depend on the quality and scope of the available data
+
+Because of these limitations, the project should be understood as a learning-oriented prototype rather than a production-ready credit scoring system.
+
+---
+
+## 14. Future Improvements
+If more time were available, this project could be improved by:  
+- testing additional machine learning models
+- improving model explainability
+- adding fairness and bias analysis
+- improving the visual design of the interface
+- expanding the dataset with more realistic financial variables
+- saving the full preprocessing and modelling pipeline more formally
+- enhancing the app with clearer probability interpretation and user guidance
+
+---
+
+## 15. Disclaimer
+This project is intended for educational purposes only.  
+It is not a real credit scoring system and should not be used for actual lending or financial approval decisions.
+
+---
+
+## 16. Author
+- Student Name: han huang
+- Module: ACC102
+- Track: Track 4 – Interactive Data Analysis Tool
